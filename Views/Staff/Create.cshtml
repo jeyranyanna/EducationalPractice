@@ -1,0 +1,51 @@
+﻿@model Staff
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете добавить нового сотрудника?
+			</h2>
+			<hr />
+		</div>
+		@*<div asp-validation-summary="All"></div>*@ <!--All errors are shown-->
+		<div class="mb-3">
+			<label asp-for="EmployeeSurname">Фамилия сотрудника</label>
+			<input asp-for="EmployeeSurname" class="form-control" />
+			<span asp-validation-for="EmployeeSurname" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="EmployeeName">Имя сотрудника</label>
+			<input asp-for="EmployeeName" class="form-control" />
+			<span asp-validation-for="EmployeeName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="EmployeePatronymic">Отчество сотрудника</label>
+			<input asp-for="EmployeePatronymic" class="form-control" />
+			<span asp-validation-for="EmployeePatronymic" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Post">Должность</label>
+			<select asp-for="Post" asp-items="ViewBag.Posts" class="form-control"></select>
+			<span asp-validation-for="Post" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="DateOfHiring">Дата найма</label>
+			<input asp-for="DateOfHiring" class="form-control" type="date" />
+			<span asp-validation-for="DateOfHiring" class="text-danger"></span>
+		</div>
+
+		<button type="submit" class="btn btn-primary" style="width:150px">Создать</button>
+		<a asp-controller="Staff" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+<!--Add client side validation-->
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}

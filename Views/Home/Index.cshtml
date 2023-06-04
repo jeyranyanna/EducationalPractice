@@ -1,0 +1,217 @@
+﻿@model List<Attraction>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    Layout = null; // Это отключит применение шаблона layout для данной страницы
+}
+
+@using Microsoft.AspNetCore.Identity
+@using HSEPractice2.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@*<div class="text-center">
+    <h1 class="display-4">Добро пожаловать в WaterWorld!</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="vuewport" content="width=device-width, initial-scale=1.0" />
+    <title>WaterWorld website</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+@*    <header>
+        <a href="#" class="logo">WaterWorld<span>.</span></a>
+        <nav class="navbar">
+        <a href="#home">домашняя</a>
+        <a href="#about">про нас</a>
+        <a href="#products">аттракционы</a>
+        <a href="#review">review</a>
+        <a href="#contact">контакты</a>
+        </nav>
+        <div class="icons">
+        <a href="#" class="fas fa-heart"></a>
+        <a href="#" class="fas fa-user"></a>
+        </div>
+    </header>*@
+    <header>
+    @*        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">*@
+        <a asp-controller="Home" asp-action="Index" class="logo">WaterWorld<span>.</span></a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            @if (SignInManager.IsSignedIn(User) == false)
+            {
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                <a href="#home">домашняя</a>
+                </li>
+                <li class="nav-item">
+                <a href="#about">про нас</a>
+                </li>
+                <li class="nav-item">
+                <a href="#products">аттракционы</a>
+                </li>
+                <li class="nav-item">
+                <a href="#rewiew">цены</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#rewiew">льготы</a>
+                </li>
+                <li class="nav-item">
+                <a href="#contact">контакты</a>
+                </li>
+
+                </ul>
+                </div>
+            }
+            else
+            {
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Дашборды</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Service" asp-action="Index">Услуги</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Staff" asp-action="Index">Сотрудники</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Director">Директор</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Admin">Админ</a>
+                </li>
+                </ul>
+                </div>
+            }
+
+            <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+
+    <!--Домашняя область-->
+    <section class="home" id="home">
+        <div class="content">
+            <h3>Добро пожаловать!</h3>
+            <span>Аквапарк WaterWorld</span>
+            <p>Здесь вы можете насладиться красотой нашего аквапарка и провести время с удовольствием.</p>
+        </div>
+    </section>
+
+    <!--About section-->
+    <section class="about" id="about">
+        <h1 class="heading"> <span> Про </span> нас </h1>
+        <div class="row">
+            <div class="video-container">
+                <video src="/images/waterpark.MP4" loop autoplay muted></video>
+                <h3>лучший аквапарк города</h3>
+            </div>
+
+
+            <div class="content">
+                <h3>почему стоит выбрать нас?</h3>
+                <p>Аквапарк WaterWorld это активный отдых, веселье и невероятные эмоции</p>
+                <p>Захватывающие горки на любой вкус и цвет! Крутые и прямые, высокие и низкие</p>
+                <p>Дружная команда аниматоров, которые не оставят вам ни единого шанса на скуку</p>
+                <p>Проголодались? Самое время подкрепиться! К вашим услугам наши фуд-корты с большим выбором блюд</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!--Icons section-->
+    <section class="icons-container">
+        <div class="icons">
+            <img src="~/images/icon_pool.png" alt="" />
+            <div class="info">
+                <h3>Расслабление</h3>
+                <span>бассейны и джакузи</span>
+            </div>
+        </div>
+        <div class="icons">
+            <img src="~/images/icon_slide.png" alt="" />
+            <div class="info">
+                <h3>Экстрим</h3>
+                <span>крутые горки</span>
+            </div>
+        </div>
+        <div class="icons">
+            <img src="~/images/icon-family.png" alt="" />
+            <div class="info">
+                <h3>Семья</h3>
+                <span>семейные спуски</span>
+            </div>
+        </div>
+        <div class="icons">
+            <img src="~/images/icon_seleb.png" alt="" />
+            <div class="info">
+                <h3>Эмоции</h3>
+                <span>анимационные программы</span>
+            </div>
+        </div>
+    </section>
+
+    <!--attractiobs section-->
+    <section class="products" id="products">
+        <h1 class="heading"> Наши <span>аттракционы</span></h1>
+        <div class="box-container">
+            @foreach (var attraction in Model)
+            {
+                <div class="box">
+                    <div class="image">
+                        <img src="~/images/@(attraction.AttractionName).jpg" alt="" />
+                    </div>
+                    <div class="content">
+                        <h3>@attraction.AttractionName</h3>
+                        <div class="price">@attraction.ZoneLocationNavigation.ZoneName <span>зона</span></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+
+    <!--Контактная информация-->
+    <section class="contact" id="contact">
+        <h1 class="heading"> <span> Контактная </span> информация</h1>
+        <div class="row">
+            <form action="">
+                <h2><i class="bi bi-geo-alt icon"></i> Добираться удобно</h2>
+                <p>Мы находимся в самом центре Перми по адресу:</p>
+                <p>ул. Бульвар Гагарина, 37</p>
+                <h4><i class="bi bi-bus-front"></i> Общественным транспортом</h4>
+                <p>К нам можно добраться практически на любых автобусах и маршрутках, которые едут в сторону "Центрального Пляжа".</p>
+                <h4><i class="bi bi-car-front"></i> На машине</h4>
+                <p>Наши координаты на картах: GPS 44.8996059,37.3171511</p>
+                <p><i class="bi bi-telephone icon"></i> Номер телефона: +7(900)555-55-55</p>
+                <p><i class="bi bi-envelope icon"></i> Почта: waterworldperm@aqua.com</p>
+            </form>
+            <div class="image">
+                <img src="~/images/map.png" alt="" />
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+
