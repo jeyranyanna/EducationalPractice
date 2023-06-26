@@ -1,0 +1,40 @@
+﻿@model CurrentShift
+
+<form method="post" asp-action="DeleteCur">
+	<input asp-for="CurrentShiftId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить текущую смену?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="ShiftNavigation.ShiftDate">Смена</label>
+			<input asp-for="ShiftNavigation.ShiftDate" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="EmployeeNavigation.EmployeeSurname">Сотрудник</label>
+			@if (Model.EmployeeNavigation != null)
+			{
+				<input asp-for="EmployeeNavigation.EmployeeSurname" disabled class="form-control" value="@Model.EmployeeNavigation.EmployeeSurname @Model.EmployeeNavigation.EmployeeName.Substring(0,1).@Model.EmployeeNavigation.EmployeePatronymic.Substring(0,1)" />
+			}
+			else
+			{
+				<input disabled class="form-control" value="Нет информации о сотруднике" />
+			}
+		</div>
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Schedule" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

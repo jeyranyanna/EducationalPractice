@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using HSEPractice2.Areas.Identity.Data
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@model CurrentWorkout
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете добавить новую отчетность по тренировке?
+			</h2>
+			<hr />
+		</div>
+
+		@if (SignInManager.IsSignedIn(User))
+		{
+			<div class="mb-3">
+				<label asp-for="WorkoutDate">Код тренировки</label>
+				<select asp-for="WorkoutDate" asp-items="ViewBag.Trains" class="form-control"></select>
+				<span asp-validation-for="WorkoutDate" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<label>Сотрудник: @UserManager.GetUserName(User) (@UserManager.FindByNameAsync(User.Identity.Name).Result.LastName @UserManager.FindByNameAsync(User.Identity.Name).Result.FirstName)</label>
+			</div>
+
+		}
+
+		<button type="submit" class="btn btn-primary" style="width:150px">Создать</button>
+		<a asp-controller="Train" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}

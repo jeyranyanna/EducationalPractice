@@ -1,0 +1,34 @@
+﻿@model Post
+
+<form method="post" asp-action="DeletePosts">
+	<input asp-for="PostId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить должность?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Post1">Название должности</label>
+			<input asp-for="Post1" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="SalaryAmount">Заработная плата</label>
+			<input asp-for="SalaryAmount" disabled class="form-control" />
+		</div>
+		
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Posts" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+<!--Add client side validation-->
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

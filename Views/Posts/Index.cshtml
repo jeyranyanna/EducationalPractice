@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Post>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-3">
+            <a asp-controller="Posts" asp-action="Index" class="text-decoration-none">
+                <h2 class="text-primary">Список должностей</h2>
+            </a>
+        </div>
+        <div class="col-4 text-end">   
+            @if (ViewBag.HasAccess != null && ViewBag.HasAccess)
+            {
+                <a asp-controller="Posts" asp-action="CreatePosts" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Добавить новую должность
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Posts" asp-action="CreatePosts" class="btn btn-outline-secondary">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Добавить новую должность
+                </a>
+            }
+        </div>
+        <div class="col-5 text-end">
+            <form class="d-flex" method="get" asp-controller="Posts" asp-action="SearchPosts">
+                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="SearchPosts" name="searchString">
+                <button class="btn btn-primary" type="submit">Найти</button>
+            </form>
+        </div>
+    </div>
+    <br /><br />
+
+    <form class="d-flex" method="get" />
+    <table class="table table-boarded table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Должность
+                </th>
+                <th>
+                    Заработная плата
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="30%" class="table-cell">
+                        @obj.Post1
+                    </td>
+                    <td width="30%" class="table-cell">
+                        @obj.SalaryAmount
+                    </td>
+
+                    <td width="20%">
+                        <div class="w-75 btn-group" role="group">
+                            @if (ViewBag.HasAccess == null || ViewBag.HasAccess)
+                            {
+                                <a asp-controller="Posts" asp-action="EditPosts" asp-route-id="@obj.PostId"
+                                   class="btn btn-primary mx-2"> <i class="bi bi-pencil"></i>Изменить</a>
+                                <a asp-controller="Posts" asp-action="DeletePosts" asp-route-id="@obj.PostId"
+                                   class="btn btn-danger mx-2"> <i class="bi bi-trash3"></i>Удалить</a>
+                            }
+                            else if (!ViewBag.HasAccess)
+                            {
+                                <a asp-controller="Posts" asp-action="EditPosts" asp-route-id="@obj.PostId"
+                                   class="btn btn-outline-primary"> <i class="bi bi-pencil"></i>Изменить</a>
+                                <a asp-controller="Posts" asp-action="DeletePosts" asp-route-id="@obj.PostId"
+                                   class="btn btn-outline-danger"> <i class="bi bi-trash3"></i>Удалить</a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

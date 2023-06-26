@@ -1,0 +1,54 @@
+﻿@model Event
+
+<form method="post" asp-action="Delete">
+	<input asp-for="EventId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить мероприятие?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="EventName">Название мероприятия</label>
+			<input asp-for="EventName" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="DateTime">Дата и время мероприятия</label>
+			<input asp-for="DateTime" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Duration">Продолжительность</label>
+			<input asp-for="Duration" disabled class="form-control" value ="@Model.Duration.ToString().Substring(0, 5)"/>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Description">Описание</label>
+			<input asp-for="Description" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Employee.EmployeeSurname">Инструктор</label>
+			@if (Model.Employee != null)
+			{
+				<input asp-for="Employee.EmployeeSurname" disabled class="form-control" value="@Model.Employee.EmployeeSurname @Model.Employee.EmployeeName.Substring(0,1).@Model.Employee.EmployeePatronymic.Substring(0,1)" />
+			}
+			else
+			{
+				<input disabled class="form-control" value="Нет информации об аниматоре" />
+			}
+		</div>
+
+
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Holiday" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

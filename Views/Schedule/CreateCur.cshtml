@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using HSEPractice2.Areas.Identity.Data
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@model CurrentShift
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете добавить новую отчетность по смене?
+			</h2>
+			<hr />
+		</div>
+
+		@if (SignInManager.IsSignedIn(User))
+		{
+			<div class="mb-3">
+				<label asp-for="Shift">Смена</label>
+				<select asp-for="Shift" asp-items="ViewBag.Shi" class="form-control"></select>
+				<span asp-validation-for="Shift" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<label>Сотрудник: @UserManager.GetUserName(User) (@UserManager.FindByNameAsync(User.Identity.Name).Result.LastName @UserManager.FindByNameAsync(User.Identity.Name).Result.FirstName)</label>
+			</div>
+
+		}
+
+		<button type="submit" class="btn btn-primary" style="width:150px">Создать</button>
+		<a asp-controller="Schedule" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+<!--Add client side validation-->
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}

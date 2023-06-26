@@ -1,0 +1,40 @@
+﻿@model Workout
+
+<form method="post" asp-action="Delete">
+	<input asp-for="WorkoutId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить тренировку?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="DateOfWorkout">Дата тренировки</label>
+			@{
+				var workoutDate = Model.DateOfWorkout.ToString("dd.MM.yyyy hh:mm");
+			}
+			<input disabled class="form-control" value="@workoutDate" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="WorkoutType">Тип тренировки</label>
+			<input asp-for="WorkoutType" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="Duration">Продолжительность тренировки</label>
+			<input asp-for="Duration" disabled class="form-control" type="time" value="@Model.Duration.ToString().Substring(0,5)"/>
+		</div>
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Train" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

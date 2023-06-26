@@ -1,0 +1,37 @@
+﻿@model Benefit
+
+<form method="post" asp-action="Delete">
+	<input asp-for="BenefitId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить льготу?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="BenefitName">Наименование льготы</label>
+			<input asp-for="BenefitName" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="ConditionForReceivingBenefit">Условие для получения льготыы</label>
+			<input asp-for="ConditionForReceivingBenefit" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="DiscountPercentage">Процент скидки</label>
+			<input asp-for="DiscountPercentage" disabled class="form-control" />
+		</div>
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Benefits" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

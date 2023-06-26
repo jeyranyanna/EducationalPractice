@@ -1,0 +1,54 @@
+﻿@model Attraction
+
+<form method="post" asp-action="Delete">
+	<!--Не обязательно указывать название метода, так как он одноименный и найдется сам-->
+	<input asp-for="AttractionId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить аттракцион?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="AttractionName">Название аттракциона</label>
+			<input asp-for="AttractionName" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="AttractionDescription">Описание</label>
+			<input asp-for="AttractionDescription" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="GrowthRestrictions">Ограничения по росту</label>
+			<input asp-for="GrowthRestrictions" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="WeightRestrictions">Ограничения по весу</label>
+			<input asp-for="WeightRestrictions" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="SlideHeight">Высота горки</label>
+			<input asp-for="SlideHeight" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="DescentTime">Время спуска</label>
+			<input asp-for="DescentTime" disabled class="form-control" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="ZoneLocation">Зона</label>
+			<select asp-for="ZoneLocation" asp-items="ViewBag.Zones" disabled class="form-control"></select>
+		</div>
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Attraction" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+<!--Add client side validation-->
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

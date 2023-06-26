@@ -1,0 +1,38 @@
+﻿@model Benefit
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете добавить новую льготу?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="BenefitName">Наименование льготы</label>
+			<input asp-for="BenefitName" class="form-control" />
+			<span asp-validation-for="BenefitName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="ConditionForReceivingBenefit">Условие для получения льготы</label>
+			<input asp-for="ConditionForReceivingBenefit" class="form-control" />
+			<span asp-validation-for="ConditionForReceivingBenefit" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="DiscountPercentage">Процент скидки</label>
+			<input asp-for="DiscountPercentage" class="form-control" />
+			<span asp-validation-for="DiscountPercentage" class="text-danger"></span>
+		</div>
+		<button type="submit" class="btn btn-primary" style="width:150px">Создать</button>
+		<a asp-controller="Benefits" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}

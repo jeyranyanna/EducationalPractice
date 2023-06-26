@@ -1,0 +1,36 @@
+﻿@model Shift
+
+<form method="post" asp-action="Delete">
+	<input asp-for="ShiftId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить смену?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="ShiftDate">Дата смены</label>
+			@{
+				var shiftDate = Model.ShiftDate.ToString("dd-MM-yyyy");
+			}
+			<input disabled class="form-control" value="@shiftDate" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="WorkShedule">Продолжительность рабочего дня</label>
+			<input asp-for="WorkShedule" disabled class="form-control" />
+		</div>
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Schedule" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+<!--Add client side validation-->
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

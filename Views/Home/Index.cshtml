@@ -1,0 +1,307 @@
+﻿@model Tuple<IEnumerable<Attraction>, IEnumerable<Service>, IEnumerable<Service>, IEnumerable<Benefit>>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    Layout = null; // Это отключит применение шаблона layout для данной страницы
+}
+
+@using Microsoft.AspNetCore.Identity
+@using HSEPractice2.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="vuewport" content="width=device-width, initial-scale=1.0" />
+    <title>WaterWorld website</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <header>
+        <a asp-controller="Home" asp-action="Index" class="logo">WaterWorld<span>.</span></a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            @if (SignInManager.IsSignedIn(User) == false)
+            {
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a href="#home">Домашняя</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about">Про нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#products">Аттракционы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#prices">Цены</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#benefits">Льготы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact">Контакты</a>
+                    </li>
+                </ul>
+                </div>
+            }
+            else
+            {
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Дашборды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Service" asp-action="Index">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Staff" asp-action="Index">Сотрудники</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Director">Директор</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Admin">Админ</a>
+                    </li>
+                </ul>
+                </div>
+            }
+
+            <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+
+    <!--Домашняя область-->
+    <section class="home" id="home">
+        <div class="content">
+            <h3>Добро пожаловать!</h3>
+            <span>Аквапарк WaterWorld</span>
+            <p>Здесь вы можете насладиться красотой нашего аквапарка и провести время с удовольствием.</p>
+        </div>
+    </section>
+
+    <!--Про нас-->
+    <section class="about" id="about">
+        <h1 class="heading">Про нас</h1>
+        <div class="row">
+            <div class="video-container">
+                <video src="/images/waterpark.MP4" loop autoplay muted></video>
+                <h3>лучший аквапарк города</h3>
+            </div>
+
+
+            <div class="content">
+                <h3>Почему стоит выбрать нас?</h3>
+                <p>Аквапарк WaterWorld это активный отдых, веселье и невероятные эмоции</p>
+                <p>Захватывающие горки на любой вкус и цвет! Крутые и прямые, высокие и низкие</p>
+                <p>Дружная команда аниматоров, которые не оставят вам ни единого шанса на скуку</p>
+                <p>Проголодались? Самое время подкрепиться! К вашим услугам наши фуд-корты с большим выбором блюд</p>
+            </div>
+        </div>
+    </section>
+
+    <!--Секция иконок-->
+    <section class="icons-container">
+        <div class="icons">
+            <img src="~/images/icon_pool.png" alt="" />
+            <div class="info">
+                <h3>Расслабление</h3>
+                <span>бассейны и джакузи</span>
+            </div>
+        </div>
+        <div class="icons">
+            <img src="~/images/icon_slide.png" alt="" />
+            <div class="info">
+                <h3>Экстрим</h3>
+                <span>крутые горки</span>
+            </div>
+        </div>
+        <div class="icons">
+            <img src="~/images/icon-family.png" alt="" />
+            <div class="info">
+                <h3>Семья</h3>
+                <span>семейные спуски</span>
+            </div>
+        </div>
+        <div class="icons">
+            <img src="~/images/icon_seleb.png" alt="" />
+            <div class="info">
+                <h3>Эмоции</h3>
+                <span>анимационные программы</span>
+            </div>
+        </div>
+    </section>
+
+    <!--Область аттракционов-->
+    <section class="products" id="products">
+        <h1 class="heading">Наши аттракционы</h1>
+        <div class="box-container">
+            @foreach (var attraction in Model.Item1)
+            {
+                <div class="box">
+                    <div class="image">
+                        <img src="~/images/@(attraction.AttractionName).jpg" alt="" />
+                    </div>
+                    <div class="content">
+                        <h3>@attraction.AttractionName</h3>
+                        <div class="price">@attraction.ZoneLocationNavigation.ZoneName <span>зона</span></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!--Секция услуг-->
+    <section class="prices" id="prices">
+        <h1 class="heading">Наши цены</h1>
+        <div class="box-container">
+            @foreach (var service in Model.Item2)
+            {
+                <div class="box">
+                    <div class="stars">
+                        <i class="fas fa-water"></i>
+                        <i class="fas fa-water"></i>
+                        <i class="fas fa-water"></i>
+                        <i class="fas fa-water"></i>
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <p>@service.Description</p>
+                    <br>
+                    <div class="user-info">
+                        <h3>@service.ServiceName</h3>
+                        <br>
+                        <span>@service.Price руб.</span>
+                    </div>
+                    <span class="fas fa-ticket"></span>
+                </div>
+            }
+        </div>
+        <div class="container">
+            <a class="btn" id="openPopupButton">Узнать больше цен</a>
+        </div>
+    </section>
+    <!--Прейскурант цен-->
+    <div id="popupContent" style="display:none;">
+        <div class="table-box">
+            <div class="table-row table-head">
+                <div class="table-cell">
+                    <p>Наименование услуги</p>
+                </div>
+                <div class="table-cell">
+                    <p>Описание</p>
+                </div>
+                <div class="table-cell">
+                    <p>Цена</p>
+                </div>
+            </div>
+            @foreach(var service in Model.Item3)
+            {
+                <div class="table-row">
+                    <div class="table-cell">
+                        <p>@service.ServiceName</p>
+                    </div>
+                    <div class="table-cell">
+                        <p>@service.Description</p>
+                    </div>
+                    <div class="table-cell cell-middle">
+                        <p>@service.Price</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <!--Льготы-->
+    <section class="benefits" id="benefits">
+        <h1 class="heading">Наши льготы</h1>
+        <div class="table-box">
+            <div class="table-row table-head">
+                <div class="table-cell">
+                    <p>Наименование льготы</p>
+                </div>
+                <div class="table-cell">
+                    <p>Условие для получения</p>
+                </div>
+                <div class="table-cell">
+                    <p>Процент скидки</p>
+                </div>
+            </div>
+            @foreach (var benefit in Model.Item4)
+            {
+                <div class="table-row">
+                    <div class="table-cell">
+                        <p>@benefit.BenefitName</p>
+                    </div>
+                    <div class="table-cell">
+                        <p>@benefit.ConditionForReceivingBenefit</p>
+                    </div>
+                    <div class="table-cell cell-middle">
+                        <p>@benefit.DiscountPercentage</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </section>
+    <!--Контактная информация-->
+    <section class="contact" id="contact">
+        <h1 class="heading">Контактная информация</h1>
+        <div class="row">
+            <form action="">
+                <h2><i class="bi bi-geo-alt icon"></i> Добираться удобно</h2>
+                <p>Мы находимся в самом центре Перми по адресу:</p>
+                <p>ул. Бульвар Гагарина, 37</p>
+                <h4><i class="bi bi-bus-front"></i> Общественным транспортом</h4>
+                <p>К нам можно добраться практически на любых автобусах и маршрутках, которые едут в сторону "Центрального Пляжа".</p>
+                <h4><i class="bi bi-car-front"></i> На машине</h4>
+                <p>Наши координаты на картах: GPS 44.8996059,37.3171511</p>
+                <p><i class="bi bi-telephone icon"></i> Номер телефона: +7(900)555-55-55</p>
+                <p><i class="bi bi-envelope icon"></i> Почта: waterworldperm@aqua.com</p>
+            </form>
+            <div class="image">
+                <img src="~/images/map.png" alt="" />
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+
+<script>
+    var openPopupButton = document.getElementById('openPopupButton');
+    var popupContent = document.getElementById('popupContent');
+
+    // Добавление события клика
+    openPopupButton.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default behavior of the link
+
+        // Проверка текущего состояния показа pop-up content
+        if (popupContent.style.display === 'block') {
+            // Если видимо, то скрыть
+            popupContent.style.display = 'none';
+        } else {
+            // Если скрыто, то показать
+            popupContent.style.display = 'block';
+        }
+    });
+</script>

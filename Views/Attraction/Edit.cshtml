@@ -1,0 +1,68 @@
+﻿@model Attraction
+
+<form asp-action="Edit">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете изменить аттракцион?
+			</h2>
+			<hr />
+		</div>
+
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div asp-validation-summary="All" class="text_danger"></div> <!--All errors are shown-->
+		<input type="hidden" asp-for="AttractionId" />
+
+		<div class="mb-3">
+			<label asp-for="AttractionName">Название аттракциона</label>
+			<input asp-for="AttractionName" class="form-control" />
+			<span asp-validation-for="AttractionName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="AttractionDescription">Описание</label>
+			<input asp-for="AttractionDescription" class="form-control" />
+			<span asp-validation-for="AttractionDescription" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="GrowthRestrictions">Ограничения по росту</label>
+			<input asp-for="GrowthRestrictions" class="form-control" />
+			<span asp-validation-for="GrowthRestrictions" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="WeightRestrictions">Ограничения по весу</label>
+			<input asp-for="WeightRestrictions" class="form-control" />
+			<span asp-validation-for="WeightRestrictions" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="SlideHeight">Высота горки</label>
+			<input asp-for="SlideHeight" class="form-control" />
+			<span asp-validation-for="SlideHeight" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="DescentTime">Время спуска, сек.</label>
+			<input asp-for="DescentTime" class="form-control" />
+			<span asp-validation-for="DescentTime" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="ZoneLocation">Зона расположения</label>
+			<select asp-for="ZoneLocation" class="form-control" asp-items="ViewBag.Zones"></select>
+			<span asp-validation-for="ZoneLocation" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Изменить" class="btn btn-primary" style="width:150px" />
+			<a asp-controller="Attraction" asp-action="Index" class="btn btn-secondary" style="width:200px">
+				Вернуться к списку
+			</a>
+		</div>
+	</div>
+</form>
+
+
+<!--Add client side validation-->
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+
+

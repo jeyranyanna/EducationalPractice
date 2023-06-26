@@ -1,0 +1,42 @@
+﻿@model CurrentWorkout
+
+<form method="post" asp-action="DeleteCur">
+	<input asp-for="CurrentWorkoutId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить текущую тренировку?
+			</h2>
+			<hr />
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="WorkoutDate">Код тренировки</label>
+			<input asp-for="WorkoutDate" disabled class="form-control"></input>
+		</div>
+		<div class="mb-3">
+			<label asp-for="TrainerNavigation.EmployeeSurname">Инструктор</label>
+			@if (Model.TrainerNavigation != null)
+			{
+				<input asp-for="TrainerNavigation.EmployeeSurname" disabled class="form-control" value="@Model.TrainerNavigation.EmployeeSurname @Model.TrainerNavigation.EmployeeName.Substring(0,1).@Model.TrainerNavigation.EmployeePatronymic.Substring(0,1)" />
+			}
+			else
+			{
+				<input disabled class="form-control" value="Нет информации о сотруднике" />
+			}
+		</div>
+
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Train" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+

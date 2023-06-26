@@ -1,0 +1,53 @@
+﻿@model Checking
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете добавить новую проверку?
+			</h2>
+			<hr />
+		</div>
+		<div asp-validation-summary="All"></div><!--All errors are shown-->
+		<div class="mb-3">
+			<label asp-for="CheckingDate">Дата проверки</label>
+			<input asp-for="CheckingDate" class="form-control" type="date" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" />
+			<span asp-validation-for="CheckingDate" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="AttractionId">Аттракцион</label>
+			<select asp-for="AttractionId" asp-items="ViewBag.Attractions" class="form-control"></select>
+			<span asp-validation-for="AttractionId" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="EmployeeId">Инструктор, проводящий проверку</label>
+			<select asp-for="EmployeeId" asp-items="ViewBag.Employers" class="form-control"></select>
+			<span asp-validation-for="EmployeeId" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="AdmissionLaunch">Допуск к запуску</label>
+			<select asp-for="AdmissionLaunch" class="form-control">
+				<option value="Да">Да</option>
+				<option value="Нет">Нет</option>
+			</select>
+			<span asp-validation-for="AdmissionLaunch" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Note">Примечание</label>
+			<input asp-for="Note" class="form-control" />
+			<span asp-validation-for="Note" class="text-danger"></span>
+		</div>
+
+		<button type="submit" class="btn btn-primary" style="width:150px">Создать</button>
+		<a asp-controller="Checks" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}

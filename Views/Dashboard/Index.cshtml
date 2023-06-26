@@ -1,0 +1,257 @@
+﻿<div class="container">
+    <div class="row mb-4">
+        <!-- Выручка в день -->
+        <div class="col-md-4">
+            <div class="d-flex flex-row widget summary income">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="bi bi-cash-stack bi-lg bi-2x icon-large"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">Средняя выручка в день</span>
+                    <h1 class="display-6 fw-bold">@ViewBag.AverageIncome руб.</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Сотрудники -->
+        <div class="col-md-4">
+            <div class="d-flex flex-row widget summary employees">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="bi bi-people-fill bi-lg bi-6x icon-large"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">Сотрудники</span>
+                    <h1 class="display-6 fw-bold">@ViewBag.TotalEmployees</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Аттракционы -->
+        <div class="col-md-4">
+            <div class="d-flex flex-row widget summary attrations">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="bi bi-umbrella-fill bi-lg bi-2x icon-large"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3">
+                    <span class="lead">Аттракционы</span>
+                    <h1 class="display-6 fw-bold">@ViewBag.TotalAttractions</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="chart-container">
+        <div class="column-chart">
+            <div class="chart-label">
+                <span class="chart-label-text">Выручка по дням</span>
+            </div>
+            <div class="text-center">
+                <a href="@Url.Action("ExportToExcelStolb", "Dashboard")">Экспорт в Excel</a>
+            </div>
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div class="pie-chart">
+            <div class="chart-label">
+                <span class="chart-label-text">Топ-5 услуг по продажам  </span>
+            </div>
+            <div class="text-center">
+                <a href="@Url.Action("ExportToExcel", "Dashboard")">Экспорт в Excel</a>
+            </div>
+            <canvas id="myPieChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Dashboard/GetSalesData",
+            data: "",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccessResult,
+            error: OnError
+        });
+
+        function OnSuccessResult(data) {
+            var _data = data;
+            var _chartLabels = _data[0];
+            var _chartData = _data[1];
+
+            var barColor = "rgba(150, 62, 219, 255)"; // Одиночный цвет для столбцов
+            var backgroundColor = "rgba(255, 255, 255, 0.9)";
+            var textColor = "#333";
+
+            var font = {
+                family: "'Arial', sans-serif",
+                size: 14,
+                weight: "bold"
+            };
+
+            var xAxisFontSize = 12;
+
+            var options = {
+                scales: {
+                    x: {
+                        grid: {
+                            display: true,
+                            color: "#EEE"
+                        },
+                        ticks: {
+                            color: textColor,
+                            font: {
+                                family: font.family,
+                                size: xAxisFontSize
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: true,
+                            color: "#EEE"
+                        },
+                        ticks: {
+                            color: textColor,
+                            font: {
+                                family: font.family,
+                                size: font.size
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Скрытие легенды для столбчатой диаграммы
+                    }
+                }
+            };
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: _chartLabels,
+                    datasets: [{
+                        backgroundColor: barColor,
+                        data: _chartData
+                    }]
+                },
+                options: options
+            });
+
+            var _serviceLabels = _data[2];
+            var _serviceData = _data[3];
+
+            var pieColor = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#E7E9ED"];
+
+            var pieOptions = {
+                plugins: {
+                    legend: {
+                        display: true, // Отображение легенды для круговой диаграммы
+                        position: "bottom" // Положение легенды
+                    }
+                }
+            };
+
+            new Chart("myPieChart", {
+                type: "pie",
+                data: {
+                    labels: _serviceLabels,
+                    datasets: [{
+                        backgroundColor: pieColor,
+                        data: _serviceData
+                    }]
+                },
+                options: pieOptions
+            });
+        }
+
+        function OnError(err) {
+            // Обработка ошибки
+        }
+    });
+</script>
+
+
+
+<style>
+    body {
+        background-color: lavender;
+    }
+
+    .icon-large {
+        font-size: 2rem;
+    }
+
+    .chart-label {
+        display:flex;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .widget.summary {
+        background-color: #F8F8FF;
+        border-radius: 20px;
+        padding: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .widget.summary h1 {
+        font-size: 24px;
+        color: #333;
+        margin-top: 10px;
+    }
+
+    .widget.summary .lead {
+        font-size: 20px;
+        color: #333;
+    }
+
+
+    canvas {
+        max-width: 600px;
+        max-height: 630px;
+        margin-right: 20px;
+    }
+
+    .chart-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .column-chart {
+        flex: 1;
+        max-width: 1000px;
+        max-height: 400px;
+    }
+
+    .pie-chart {
+        flex: 1;
+        max-width: 500px;
+        max-height: 430px;
+    }
+
+    .chart-label {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .chart-label-text {
+        font-size: 24px;
+        color: #333;
+    }
+</style>

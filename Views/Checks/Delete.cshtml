@@ -1,0 +1,51 @@
+﻿@model Checking
+
+<form method="post" asp-action="Delete">
+	<!--Не обязательно указывать название метода, так как он одноименный и найдется сам-->
+	<input asp-for="CheckingId" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете удалить проверку?
+			</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="CheckingDate">Дата проверки</label>
+			<input asp-for="CheckingDate" disabled class="form-control" type="date" value="@Model.CheckingDate.ToString("yyyy-MM-dd")" />
+		</div>
+		<div class="mb-3">
+			<label asp-for="AttractionId">Аттракцион</label>
+			<select asp-for="AttractionId" asp-items="ViewBag.Attractions" disabled class="form-control"></select>
+		</div>
+		<div class="mb-3">
+			<label asp-for="EmployeeId">Инструктор, проводящий проверку</label>
+			<select asp-for="EmployeeId" asp-items="ViewBag.Employers" disabled class="form-control"></select>
+		</div>
+		<div class="mb-3">
+			<label asp-for="AdmissionLaunch">Допуск к запуску</label>
+			<select asp-for="AdmissionLaunch" disabled class="form-control">
+				<option value="Да">Да</option>
+				<option value="Нет">Нет</option>
+			</select>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Note">Примечание</label>
+			<input asp-for="Note" disabled class="form-control" />
+		</div>
+
+		<button type="submit" class="btn btn-danger" style="width:150px">Удалить</button>
+		<a asp-controller="Checks" asp-action="Index" class="btn btn-secondary" style="width:200px">
+			Вернуться к списку
+		</a>
+	</div>
+</form>
+
+<!--Add client side validation-->
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}
+
+

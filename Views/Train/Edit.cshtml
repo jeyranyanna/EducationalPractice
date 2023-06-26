@@ -1,0 +1,42 @@
+﻿@model Workout
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">
+				Желаете изменить тренировку?
+			</h2>
+			<hr />
+		</div>
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<input type="hidden" asp-for="WorkoutId" />
+		<div class="mb-3">
+			<label asp-for="DateOfWorkout">Дата тренировки</label>
+			<input asp-for="DateOfWorkout" class="form-control" type="datetime" value="@Model.DateOfWorkout.ToString("dd.MM.yyyy hh:mm")" />
+			<span asp-validation-for="DateOfWorkout" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="WorkoutType">Тип тренировки</label>
+			<input asp-for="WorkoutType" class="form-control" />
+			<span asp-validation-for="WorkoutType" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Duration">Продолжительность тренировки</label>
+			<input asp-for="Duration" class="form-control" type="time" />
+			<span asp-validation-for="Duration" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Изменить" class="btn btn-primary" style="width:150px" />
+			<a asp-controller="Train" asp-action="Index" class="btn btn-secondary" style="width:200px">
+				Вернуться к списку
+			</a>
+		</div>
+	</div>
+</form>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial.cshtml" />
+	}
+}

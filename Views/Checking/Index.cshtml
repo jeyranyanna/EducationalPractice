@@ -1,0 +1,115 @@
+﻿@*@model IEnumerable<CheckingAttraction>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-3">
+            <a asp-controller="Checking" asp-action="Index" class="text-decoration-none">
+                <h2 class="text-primary">Список проверок аттракционов</h2>
+            </a>
+        </div>
+        <div class="col-4 text-end">
+            @if (ViewBag.HasAccess != null && ViewBag.HasAccess)
+            {
+                <a asp-controller="Checking" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Добавить новую проверку
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Checking" asp-action="Create" class="btn btn-outline-secondary">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Добавить новую проверку
+                </a>
+            }
+        </div>
+@*        <div class="col-5 text-end">
+            <form class="d-flex" method="get" asp-controller="Checking" asp-action="Search">
+                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="searchString">
+                <button class="btn btn-primary" type="submit">Найти</button>
+            </form>
+        </div>*@
+@*    </div>
+    <br /><br />
+
+    <form class="d-flex" method="get">
+        <table class="table table-boarded table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Дата проверки
+                    </th>
+                    <th>
+                        Аттракцион
+                    </th>
+                    <th>
+                        Инструктор,проводящий проверку
+                    </th>
+                    <th>
+                        Допуск к запуску
+                    </th>
+                    <th>
+                        Примечание
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="13%" class="table-cell">
+                            @obj.CheckingDate
+                        </td>
+                        <td width="13%" class="table-cell">
+                            @if (obj.Attraction != null)
+                            {
+                                @obj.Attraction.AttractionName
+                            }
+                        </td>
+                        <td width="13%">
+                            @if (obj.Employee != null)
+                            {
+                                @obj.Employee.EmployeeSurname
+                            }
+                        </td>
+                        <td width="20%">
+                            @obj.AdmissionLaunch
+                        </td>
+                        <td width="10%">
+                            @obj.Note
+                        </td>
+                        <td width="20%">
+                            <div class="w-75 btn-group" role="group">
+                                @if (ViewBag.HasAccess == null || ViewBag.HasAccess)
+                                {
+                                    <a asp-controller="Checking" asp-action="Edit" asp-route-id="@obj.AttractionId" asp-route-date="@obj.CheckingDate"
+                                       class="btn btn-primary mx-2"> <i class="bi bi-pencil"></i>Изменить</a>
+                                    <a asp-controller="Checking" asp-action="Delete" asp-route-id="@obj.AttractionId" asp-route-date="@obj.CheckingDate"
+                                       class="btn btn-danger mx-2"> <i class="bi bi-trash3"></i>Удалить</a>
+                                }
+                                else if (!ViewBag.HasAccess)
+                                {
+                                    <a asp-controller="Checking" asp-action="Edit" asp-route-id="@($"{obj.CheckingDate}-{obj.AttractionId}")"
+                                       class="btn btn-outline-primary"> <i class="bi bi-pencil"></i>Изменить</a>
+                                    <a asp-controller="Checking" asp-action="Delete" asp-route-id="@($"{obj.CheckingDate}-{obj.AttractionId}")"
+                                       class="btn btn-outline-danger"> <i class="bi bi-trash3"></i>Удалить</a>
+
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<style>
+    .table-cell {
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+*@

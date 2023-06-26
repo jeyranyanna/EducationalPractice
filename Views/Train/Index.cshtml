@@ -1,0 +1,183 @@
+﻿@model Tuple<IEnumerable<Workout>, IEnumerable<CurrentWorkout>, int>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-md-7">
+            <h2 class="text-primary">Расписание тренировок</h2>
+        </div>
+        <div class="col-md-5">
+            <h2 class="text-primary">Посещения тренировок</h2>
+        </div>
+    </div>
+    <br /><br />
+
+    <div class="row">
+        <div class="col-md-7">
+            <div>
+                @if (ViewBag.HasAccess != null && ViewBag.HasAccess)
+                {
+                    <a asp-controller="Train" asp-action="Create" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Создать новую тренировку
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Train" asp-action="Create" class="btn btn-outline-secondary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Создать новую тренировку
+                    </a>
+                }
+                <form class="d-flex" method="get" />
+                <table class="table table-boarded table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Код
+                            </th>
+                            <th>
+                                Дата
+                            </th>
+                            <th>
+                                Тип
+                            </th>
+                            <th>
+                                Длительность
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Item1)
+                        {
+                            <tr>
+                                <td width="5%" class="table-cell">
+                                    @obj.WorkoutId
+                                </td>
+                                <td width="20%" class="table-cell">
+                                    @obj.DateOfWorkout.ToString("dd.MM.yyyy hh:mm") 
+                                </td>
+                                <td width="45%" class="table-cell">
+                                    @obj.WorkoutType
+                                </td>
+                                <td width="15%" class="table-cell">
+                                    @obj.Duration.ToString().Substring(0,5)
+                                </td>
+                                <td width="20%">
+                                    <div class="w-75 btn-group" role="group">
+                                        @if (ViewBag.HasAccess == null || ViewBag.HasAccess)
+                                        {
+                                            <a asp-controller="Train" asp-action="Edit" asp-route-id="@obj.WorkoutId"
+                                               class="btn btn-primary mx-2"> <i class="bi bi-pencil"></i>Изменить</a>
+                                            <a asp-controller="Train" asp-action="Delete" asp-route-id="@obj.WorkoutId"
+                                               class="btn btn-danger mx-2"> <i class="bi bi-trash3"></i>Удалить</a>
+                                        }
+                                        else if (!ViewBag.HasAccess)
+                                        {
+                                            <a asp-controller="Train" asp-action="Edit" asp-route-id="@obj.WorkoutId"
+                                               class="btn btn-outline-primary"> <i class="bi bi-pencil"></i>Изменить</a>
+                                            <a asp-controller="Train" asp-action="Delete" asp-route-id="@obj.WorkoutId"
+                                               class="btn btn-outline-danger"> <i class="bi bi-trash3"></i>Удалить</a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <!--Втоpая таблица-->
+            <div>
+                @if (ViewBag.HasAccess2 != null && ViewBag.HasAccess2)
+                {
+                    <a asp-controller="Train" asp-action="CreateCur" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Добавить посещение тренировки
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Train" asp-action="CreateCur" class="btn btn-outline-secondary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Добавить посещение тренировки
+                    </a>
+                }
+                <form class="d-flex" method="get" />
+
+                <table class="table table-boarded table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                № тренировки
+                            </th>
+                            <th>
+                                Инструктор
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.Item2)
+                        {
+                            int userId = Model.Item3;
+                            <tr>
+                                <td width="45%" class="table-cell">
+                                    @obj.WorkoutDate
+                                </td>
+                                <td width="45%" class="table-cell">
+                                    @if (obj.TrainerNavigation != null)
+                                    {
+                                        var fullName = obj.TrainerNavigation.EmployeeSurname + " " + obj.TrainerNavigation.EmployeeName.Substring(0, 1) + "." + obj.TrainerNavigation.EmployeePatronymic.Substring(0, 1) + ".";
+                                        @fullName
+                                    }
+                                </td>
+                                <td width="10%">
+                                    @if ((ViewBag.HasAccess) || (obj.TrainerNavigation != null && obj.TrainerNavigation.EmployeeId == userId))
+                                    {
+                                        <div class="w-75 btn-group" role="group">
+                                            <a asp-controller="Train" asp-action="EditCur" asp-route-id="@obj.CurrentWorkoutId" class="btn btn-primary mx-2">
+                                                <i class="bi bi-pencil"></i>Изменить
+                                            </a>
+                                            <a asp-controller="Train" asp-action="DeleteCur" asp-route-id="@obj.CurrentWorkoutId" class="btn btn-danger mx-2">
+                                                <i class="bi bi-trash3"></i>Удалить
+                                            </a>
+                                        </div>
+                                    }
+@*                                    <div class="w-75 btn-group" role="group">
+                                        @if (ViewBag.HasAccess2 == null || ViewBag.HasAccess2)
+                                        {
+                                            <a asp-controller="Train" asp-action="EditCur" asp-route-id="@obj.CurrentWorkoutId"
+                                               class="btn btn-primary mx-2"> <i class="bi bi-pencil"></i>Изменить</a>
+                                            <a asp-controller="Train" asp-action="DeleteCur" asp-route-id="@obj.CurrentWorkoutId"
+                                               class="btn btn-danger mx-2"> <i class="bi bi-trash3"></i>Удалить</a>
+                                        }
+                                        else if (!ViewBag.HasAccess2)
+                                        {
+                                            <a asp-controller="Train" asp-action="EditCur" asp-route-id="@obj.CurrentWorkoutId"
+                                               class="btn btn-outline-primary"> <i class="bi bi-pencil"></i>Изменить</a>
+                                            <a asp-controller="Train" asp-action="DeleteCur" asp-route-id="@obj.CurrentWorkoutId"
+                                               class="btn btn-outline-danger"> <i class="bi bi-trash3"></i>Удалить</a>
+                                        }
+                                    </div>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-cell {
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
